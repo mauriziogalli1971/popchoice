@@ -1,0 +1,171 @@
+@use "sass:color";
+
+// Variables
+//-----------------------------------------------------------------------------
+// Colors
+$color-1: #000C36;
+$color-2: #51E08A;
+$color-3: #3B4877;
+$color-4: #FFF;
+
+// Fonts
+$font-family-1: "Roboto Slab", sans-serif;
+$font-family-2: "Carter One", sans-serif;
+
+// Box Model
+$unit: 1rem; // 10px
+$spacing: 2 * $unit;
+$spacing-lg: 3 * $unit;
+$container-width: 375px;
+$border-radius: 0.5 * $unit;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  background-color: $color-1;
+  color: $color-4;
+  font-family: $font-family-1;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.app-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: $spacing-lg $spacing;
+  width: $container-width;
+}
+
+header, main {
+  width: 100%;
+}
+
+header {
+  margin-bottom: $spacing-lg;
+
+  img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  h1 {
+    font-family: $font-family-2;
+    font-size: 4.5rem;
+    line-height: 1.5;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  position: relative;
+
+  .loader {
+    align-items: center;
+    background-color: color.adjust($color-1, $alpha: -0.2);
+    background-image: url('../img/loader.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80%;
+    display: none;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+
+    &::after {
+      content: "Popcorn popping...";
+    }
+
+    &.loading {
+      display: flex;
+    }
+  }
+
+  label, textarea {
+    display: block;
+  }
+
+  label {
+    margin-bottom: 0.5rem;
+  }
+
+  textarea {
+    background-color: $color-3;
+    border: none;
+    border-radius: $border-radius;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 300;
+    padding: $unit;
+    resize: none;
+    width: 100%;
+  }
+
+  ::placeholder {
+    color: $color-1;
+  }
+
+}
+
+button {
+  background-color: $color-2;
+  border: none;
+  border-radius: $border-radius;
+  color: $color-1;
+  font-family: inherit;
+  font-size: $spacing-lg;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: $spacing-lg;
+  padding: $spacing;
+  transition: background-color 0.3s ease;
+  width: 100%;
+
+  &[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background-color: color.adjust($color-2, $lightness: -10%);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+}
+
+.results-container {
+  h2 {
+    font-size: 3rem;
+    line-height: 1.25;
+    margin-bottom: $spacing;
+    margin-top: 0;
+  }
+
+  p {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+}

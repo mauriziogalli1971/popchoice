@@ -1,0 +1,137 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  background-color: #000C36;
+  color: #FFF;
+  font-family: "Roboto Slab", sans-serif;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.app-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 3rem 2rem;
+  width: 375px;
+}
+
+header, main {
+  width: 100%;
+}
+
+header {
+  margin-bottom: 3rem;
+}
+header img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+header h1 {
+  font-family: "Carter One", sans-serif;
+  font-size: 4.5rem;
+  line-height: 1.5;
+  margin: 0;
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+}
+.search-form .loader {
+  align-items: center;
+  background-color: rgba(0, 12, 54, 0.8);
+  background-image: url("../img/loader.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 80%;
+  display: none;
+  inset: 0;
+  justify-content: center;
+  position: absolute;
+}
+.search-form .loader::after {
+  content: "Popcorn popping...";
+}
+.search-form .loader.loading {
+  display: flex;
+}
+.search-form label, .search-form textarea {
+  display: block;
+}
+.search-form label {
+  margin-bottom: 0.5rem;
+}
+.search-form textarea {
+  background-color: #3B4877;
+  border: none;
+  border-radius: 0.5rem;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 300;
+  padding: 1rem;
+  resize: none;
+  width: 100%;
+}
+.search-form ::placeholder {
+  color: #000C36;
+}
+
+button {
+  background-color: #51E08A;
+  border: none;
+  border-radius: 0.5rem;
+  color: #000C36;
+  font-family: inherit;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 3rem;
+  padding: 2rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+button[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+button:hover {
+  background-color: #26d86d;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.results-container h2 {
+  font-size: 3rem;
+  line-height: 1.25;
+  margin-bottom: 2rem;
+  margin-top: 0;
+}
+.results-container p {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/*# sourceMappingURL=app.css.map */
