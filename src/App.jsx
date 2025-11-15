@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getMovies, initApp, retrieveMatches, retrieveQueryEmbedding, } from './js/utilities.js';
+import {
+  getMovies,
+  initApp,
+  retrieveMatches,
+  retrieveQueryEmbedding,
+} from './js/utilities.js';
 
 function App() {
   const [movies, setMovies] = useState([]);
