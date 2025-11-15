@@ -17,22 +17,17 @@ function App() {
     const loader = document.querySelector('.loader');
     loader.classList.add('loading');
 
-    // 1. Get the form data
     const formData = new FormData(e.currentTarget);
-
-    // 2. Convert the form data to a JavaScript object
     const data = Object.fromEntries(formData);
-
-    // Transform the data into a string
     const input = JSON.stringify(data);
 
-    // Retrieve the query embedding from OpenAI
+    // Retrieve the query embedding from OpenAI API
     const query = await retrieveQueryEmbedding(input);
 
-    // Retrieve the matches from the database
+    // Retrieve the matches from Supabase
     const context = await retrieveMatches(query);
 
-    // Get the movies from the API
+    // Get the movies from the OpenAI API
     let movie = JSON.parse(await getMovies(input, context));
     if (!movie) {
       movie = {
