@@ -11,7 +11,7 @@ export async function initApp() {
       // Embedding
       const embeddings = await retrieveEmbeddings(chunks);
       // Storing
-      const movies = await insertMovies(embeddings);
+      await insertMovies(embeddings);
     } catch (error) {
       console.error('Error initializing the database:', error);
     }
@@ -90,6 +90,7 @@ async function insertMovies(embeddings) {
 async function isMoviesDatabaseEmpty() {
   try {
     const { data, error } = await supabase.from('movies').select();
+    if (error) throw error;
     return data.length === 0;
   } catch (error) {
     console.error('Error checking if the database is empty:', error);
