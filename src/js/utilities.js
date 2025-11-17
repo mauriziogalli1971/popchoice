@@ -1,5 +1,5 @@
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
-import { openai, supabase } from '../../config.js';
+import { openai, supabase, TMDB_API_OPTIONS } from '../../config.js';
 import data from './content.js';
 
 export async function initApp() {
@@ -152,7 +152,7 @@ export async function getMovies(input, context) {
         content: [
           'You are a precise movie recommender.',
           'Given a user input and a context vector/summary, recommend exactly one movie that is similar to the input and consistent with the context.',
-          'Respond ONLY as minified JSON with this shape: {"title":"Movie Title (Release Year)","content":"Movie Description"}.',
+          'Respond ONLY as minified JSON with this shape: {"title":"Movie Title","content":"Movie Description", "releaseYear": "Release Year"}.',
           'Rules:',
           '- Only recommend if confident it matches both input and context.',
           '- If unsure or no good match, respond exactly with: {"title":"No movies found","content":"Sorry, no movies found for your query. Please try again."}',
@@ -182,10 +182,37 @@ export async function getMovies(input, context) {
       frequency_penalty: 0.5,
     });
 
-    let content = response.choices[0].message.content;
-    console.log(content);
-    return content;
+    return response.choices[0].message.content;
   } catch (error) {
     throw error;
+  }
+}
+
+export async function retrieveMoviePoster({ title }) {
+  const movieDetails = await retrieveMovieDetailsByTitle(title);
+  return `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`;
+}
+
+/**
+ * Retrieve movie details from TMDB API
+ * @param title
+ * @return {Promise<*>}
+ */
+async function retrieveMovieDetailsByTitle(title) {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${title}&include_adult=false&language=en-US&page=1`,
+      TMDB_API_OPTIONS
+    );
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch movie details: ${response.statusText}`);
+    }
+
+    const { results } = await response.json();
+
+    return results[0];
+  } catch (error) {
+    console.error('Error retrieving movie poster:', error);
   }
 }
