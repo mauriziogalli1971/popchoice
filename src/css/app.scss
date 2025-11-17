@@ -163,7 +163,6 @@ p {
   ::placeholder {
     color: $color-1;
   }
-
 }
 
 button {
@@ -223,6 +222,11 @@ button {
   }
 }
 
+.form-group .form-row {
+  display: flex;
+  gap: $spacing-sm;
+}
+
 .results-container {
   display: flex;
   flex-direction: column;
@@ -240,5 +244,29 @@ button {
 
   img {
     border-radius: $border-radius;
+  }
+}
+
+.spinner {
+  &-container {
+    display: flex;
+    gap: $spacing-sm;
+
+    input {
+      font-size: 3rem;
+      line-height: 1;
+      text-align: center;
+    }
+  }
+
+  &-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+
+    button {
+      padding: 0 $spacing-sm;
+      width: 5 * $unit;
+    }
   }
 }

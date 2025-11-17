@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { getMovies, initApp, retrieveMatches, retrieveMoviePoster, retrieveQueryEmbedding, } from './js/utilities.js';
+import {
+  getMovies,
+  initApp,
+  retrieveMatches,
+  retrieveMoviePoster,
+  retrieveQueryEmbedding,
+} from './js/utilities.js';
 
 function App() {
   const [preferences, setPreferences] = useState({ usersCount: 0, time: '' });
@@ -55,22 +61,43 @@ function Preferences({ setPreferences }) {
   return (
     <form className="form" onInput={inputHandler} onSubmit={submitHandler}>
       <div className="form-group">
-        <label htmlFor="users-count">
-          How many people are going to watch the movie?{' '}
-        </label>
-        <input
-          type="number"
+        <p>How many people are going to watch the movie?</p>
+        <Spinner
+          label="Users"
           id="users-count"
           name="usersCount"
           min={1}
           max={5}
-          defaultValue={1}
-          required
-          aria-required="true"
+          step={1}
+          value={1}
+          required={true}
         />
       </div>
       <div className="form-group">
-        <label htmlFor="time">How much time do you have?</label>{' '}
+        <p>How much time do you have?</p>
+        <div className="form-row">
+          <Spinner
+            label="Hours"
+            id="hours"
+            name="hours"
+            min={1}
+            max={120}
+            step={15}
+            value={15}
+            required={true}
+          />{' '}
+          <Spinner
+            label="Minutes"
+            id="minutes"
+            name="minutes"
+            min={1}
+            max={120}
+            step={15}
+            value={15}
+            required={true}
+          />
+        </div>
+        {/*<label htmlFor="time">How much time do you have?</label>{' '}
         <input
           type="text"
           id="time"
@@ -78,7 +105,7 @@ function Preferences({ setPreferences }) {
           placeholder="2 hours 30 minutes"
           required
           aria-required="true"
-        />
+        />*/}
       </div>
       <button type="submit" disabled={disabled} aria-disabled={disabled}>
         Start
@@ -266,6 +293,48 @@ function Results({ movies, resetHandler }) {
     }
 
     setIndex(index + 1);
+  }
+}
+
+function Spinner({ label, id, name, min, max, step, value, required }) {
+  const [inputValue, setInputValue] = useState(value);
+
+  return (
+    <div className="spinner">
+      <label htmlFor={id}>{label}</label>
+      <div className="spinner-container">
+        <input
+          type="number"
+          min={`${min}`}
+          max={`${max}`}
+          step={`${step}`}
+          value={`${inputValue}`}
+          readOnly={true}
+          id={id}
+          name={name}
+          required={required}
+          aria-required={required}
+          aria-label={`Spinner for ${label.toLowerCase()}`}
+          role="spinbutton"
+        />
+        <div className="spinner-buttons">
+          <button type="button" aria-label={`Increment`} onClick={increment}>
+            +
+          </button>
+          <button type="button" aria-label={`Decrement`} onClick={decrement}>
+            -
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  function increment() {
+    inputValue < max && setInputValue(inputValue + step);
+  }
+
+  function decrement() {
+    inputValue > min && setInputValue(inputValue - step);
   }
 }
 
