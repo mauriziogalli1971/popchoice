@@ -1,6 +1,35 @@
+import OpenAI from 'openai';
+import { createClient } from '@supabase/supabase-js';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
-import { openai, supabase, TMDB_API_OPTIONS } from '../../config.js';
 import data from './content.js';
+
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_API_KEY = import.meta.env.VITE_SUPABASE_API_KEY;
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+// OpenAI config
+if (!OPENAI_API_KEY) throw new Error('OpenAI API key is missing or invalid.');
+export const openai = new OpenAI({
+  apiKey: OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+
+// Supabase config
+const privateKey = SUPABASE_API_KEY;
+if (!privateKey) throw new Error(`Expected env var SUPABASE_API_KEY`);
+const url = SUPABASE_URL;
+if (!url) throw new Error(`Expected env var SUPABASE_URL`);
+export const supabase = createClient(url, privateKey);
+
+// TMDB config
+export const TMDB_API_OPTIONS = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer ' + TMDB_API_KEY,
+  },
+};
 
 export async function initApp() {
   if (await isMoviesDatabaseEmpty()) {
@@ -143,16 +172,17 @@ export async function retrieveMatches(query) {
  * Get movies from the API
  * @param input
  * @param context
+ * @param duration
  * @return {Promise<string>}
  */
-export async function getMovies(input, context) {
+export async function getMovie({ input, context, duration }) {
   try {
     const messages = [
       {
         role: 'system',
         content: [
           'You are a precise movie recommender.',
-          'Given a user input and a context vector/summary, recommend exactly one movie that is similar to the input and consistent with the context.',
+          'Given a user input, a context vector/summary and the max movie duration (in minutes), recommend exactly one movie that is similar to the input and consistent with the context.',
           'Respond ONLY as minified JSON with this shape: {"title":"Movie Title","content":"Movie Description", "releaseYear": "Release Year"}.',
           'Rules:',
           '- Only recommend if confident it matches both input and context.',
@@ -170,6 +200,8 @@ export async function getMovies(input, context) {
           'Context:',
           `${context}`,
           '',
+          'Max movie duration:',
+          `${duration} minutes`,
           'Return only the JSON object as specified.',
         ].join('\n'),
       },

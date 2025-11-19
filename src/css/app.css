@@ -102,6 +102,16 @@ p {
 .form .loader.loading {
   display: flex;
 }
+.form fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+.form legend {
+  display: block;
+  margin-bottom: 1rem;
+  padding: 0;
+}
 .form label, .form input, .form textarea {
   display: block;
 }
@@ -201,14 +211,29 @@ button:hover {
   border-radius: 0.5rem;
 }
 
+.spinner {
+  flex: 1;
+  position: relative;
+}
+.spinner.spinner-right input {
+  padding-right: 2rem;
+  text-align: right;
+}
+.spinner label {
+  color: #000C36;
+  height: 0;
+  inset: 0.5rem;
+  margin-bottom: 0;
+  position: absolute;
+  width: 0;
+}
+.spinner input {
+  font-size: 3rem;
+  line-height: 1;
+}
 .spinner-container {
   display: flex;
   gap: 1rem;
-}
-.spinner-container input {
-  font-size: 3rem;
-  line-height: 1;
-  text-align: center;
 }
 .spinner-buttons {
   display: flex;
@@ -216,8 +241,13 @@ button:hover {
   gap: 1rem;
 }
 .spinner-buttons button {
+  background-color: #3B4877;
+  font-weight: 400;
   padding: 0 1rem;
   width: 5rem;
+}
+.spinner-buttons button:hover {
+  background-color: #333e66;
 }
 
 /*# sourceMappingURL=app.css.map */
