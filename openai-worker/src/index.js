@@ -25,12 +25,6 @@ export default {
 			throw new Error('Only POST requests are allowed');
 		}
 
-		// OpenAI config
-		if (!env.OPENAI_API_KEY) throw new Error('OpenAI API key is missing or invalid.');
-		export const openai = new OpenAI({
-			apiKey: env.OPENAI_API_KEY,
-		});
-
 		const queryEmbedding = await retrieveQueryEmbedding(request.body);
 		console.log(queryEmbedding);
 
@@ -43,8 +37,14 @@ export default {
  * @param input
  * @return {Promise<Array<number>>}
  */
-export async function retrieveQueryEmbedding(input) {
+async function retrieveQueryEmbedding(input) {
 	try {
+		// OpenAI config
+		if (!env.OPENAI_API_KEY) throw new Error('OpenAI API key is missing or invalid.');
+		const openai = new OpenAI({
+			apiKey: env.OPENAI_API_KEY,
+		});
+
 		const embedding = await openai.embeddings.create({
 			model: 'text-embedding-ada-002',
 			input,
