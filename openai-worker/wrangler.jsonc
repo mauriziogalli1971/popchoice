@@ -10,6 +10,9 @@
 	"observability": {
 		"enabled": true
 	},
+	"assets": {
+		"directory": "./dist"
+	},
 	"dev": {
 		"port": 8787
 	}
