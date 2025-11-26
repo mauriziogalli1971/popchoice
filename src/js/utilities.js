@@ -3,10 +3,10 @@ import { createClient } from '@supabase/supabase-js';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import data from './content.js';
 
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_API_KEY = import.meta.env.VITE_SUPABASE_API_KEY;
-const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+// const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
+// const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+// const SUPABASE_API_KEY = import.meta.env.VITE_SUPABASE_API_KEY;
+// const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 export const CF_WORKER_URL = import.meta.env.VITE_CF_WORKER_URL;
 
 // OpenAI config
