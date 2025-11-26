@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { CF_WORKER_URL } from '../js/utilities.js';
 
 export default function UserSettings({
   users,
@@ -39,6 +38,7 @@ export default function UserSettings({
        * @return {Promise<*>}
        */
       async function getUserMovie(input) {
+        const CF_WORKER_URL = import.meta.env.VITE_CF_WORKER_URL;
         try {
           const response = await fetch(CF_WORKER_URL, {
             method: 'POST',
