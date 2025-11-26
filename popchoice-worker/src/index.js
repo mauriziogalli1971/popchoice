@@ -66,8 +66,10 @@ export default {
 				},
 			});
 		} catch (error) {
-			console.error('Error retrieving query embedding:', error);
-			throw error;
+			return new Response(`Bad Request: ${error}`, {
+				status: 400,
+				headers: CORS_HEADERS,
+			});
 		}
 	},
 };
