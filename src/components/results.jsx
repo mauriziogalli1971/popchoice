@@ -9,7 +9,9 @@ export default function Results({ movies, resetHandler }) {
       <div className="results-container">
         <figure>
           <h2>{`${movies[index].title} (${movies[index].releaseYear})`}</h2>
-          <img src={movies[index].poster} alt={movies[index].title} />
+          {movies[index].poster ? (
+            <img src={movies[index].poster} alt={movies[index].title} />
+          ) : null}
           <figcaption>{`${movies[index].content}`}</figcaption>
         </figure>
       </div>

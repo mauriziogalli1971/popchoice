@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { getMovie, retrieveMatches, retrieveMoviePoster, retrieveQueryEmbedding, } from '../js/utilities.js';
+import { retrieveMovie } from '../js/utilities.js';
 
 export default function UserSettings({
   users,
@@ -35,22 +35,8 @@ export default function UserSettings({
 
       async function getUserMovie(input) {
         // Retrieve the query embedding from OpenAI API
-        const query = await retrieveQueryEmbedding(input);
-
-        // Retrieve the matches from Supabase
-        const context = await retrieveMatches(query);
-
-        // Get the movies from the OpenAI API
-        let movie = JSON.parse(await getMovie({ input, context }));
-        if (!movie) {
-          movie = {
-            title: 'No movies found',
-            content: 'Sorry, no movies found for your query. Please try again.',
-          };
-        }
-
-        movie.poster = await retrieveMoviePoster(movie);
-
+        const movie = await retrieveMovie(input);
+        console.log('Movie:', movie);
         return movie;
       }
     }
