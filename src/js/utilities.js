@@ -134,7 +134,7 @@ async function isMoviesDatabaseEmpty() {
 export async function retrieveMovie(input) {
   try {
     const response = await fetch(
-      'https://openai-worker.mauriziogalli1971.workers.dev',
+      'https://popchoice-worker.mauriziogalli1971.workers.dev/',
       {
         method: 'POST',
         headers: {
