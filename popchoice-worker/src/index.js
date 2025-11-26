@@ -1,6 +1,7 @@
 import { OpenAI } from 'openai';
 import { createClient } from '@supabase/supabase-js';
 
+const GATEWAY_URL = 'https://gateway.ai.cloudflare.com/v1/4892e0000e9e2f5967571b3c44400136/popchoice/openai';
 const CORS_HEADERS = {
 	'Access-Control-Allow-Origin': '*',
 	'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -26,6 +27,7 @@ export default {
 			if (!env.OPENAI_API_KEY) throw new Error('OpenAI API key is missing or invalid.');
 			const openai = new OpenAI({
 				apiKey: env.OPENAI_API_KEY,
+				baseURL: GATEWAY_URL,
 			});
 
 			// Supabase config
