@@ -11,7 +11,7 @@
 		"enabled": true
 	},
 	"assets": {
-		"directory": "./dist"
+		"directory": "../dist"
 	},
 	"dev": {
 		"port": 8787
