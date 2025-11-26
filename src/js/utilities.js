@@ -137,6 +137,7 @@ export async function retrieveMovie(input) {
       'https://popchoice-worker.mauriziogalli1971.workers.dev/',
       {
         method: 'POST',
+        mode: 'cors',
         headers: {
           'Content-Type': 'application/json',
         },
