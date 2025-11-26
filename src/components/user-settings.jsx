@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { retrieveMovie } from '../js/utilities.js';
+import { CF_WORKER_URL } from '../js/utilities.js';
 
 export default function UserSettings({
   users,
@@ -33,11 +33,27 @@ export default function UserSettings({
         });
       }
 
+      /**
+       * Retrieve movie from Cloudflare Worker
+       * @param input
+       * @return {Promise<*>}
+       */
       async function getUserMovie(input) {
-        // Retrieve the query embedding from OpenAI API
-        const movie = await retrieveMovie(input);
-        console.log('Movie:', movie);
-        return movie;
+        try {
+          const response = await fetch(CF_WORKER_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ input }),
+          });
+          const { movie } = await response.json();
+          return movie;
+        } catch (error) {
+          console.error('Error retrieving movie:', error);
+          throw error;
+        }
       }
     }
   }, [users]);

@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { initApp } from './js/utilities.js';
+import { useState } from 'react';
 import Preferences from './components/preferences.jsx';
 import UserSettings from './components/user-settings.jsx';
 import Results from './components/results.jsx';
@@ -22,13 +21,6 @@ function App() {
     setUsers([]);
     setMovies([]);
   }
-
-  useEffect(() => {
-    const init = async () => {
-      await initApp();
-    };
-    init();
-  }, []);
 
   return (
     <div className={'app-container'}>

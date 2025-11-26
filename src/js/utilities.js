@@ -7,6 +7,7 @@ const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY;
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_API_KEY = import.meta.env.VITE_SUPABASE_API_KEY;
 const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+export const CF_WORKER_URL = import.meta.env.VITE_CF_WORKER_URL;
 
 // OpenAI config
 if (!OPENAI_API_KEY) throw new Error('OpenAI API key is missing or invalid.');
@@ -22,7 +23,7 @@ const url = SUPABASE_URL;
 if (!url) throw new Error(`Expected env var SUPABASE_URL`);
 const supabase = createClient(url, privateKey);
 
-export async function initApp() {
+async function initApp() {
   if (await isMoviesDatabaseEmpty()) {
     try {
       console.log('Movies database is empty. Initializing...');
@@ -115,27 +116,4 @@ async function isMoviesDatabaseEmpty() {
   } catch (error) {
     console.error('Error checking if the database is empty:', error);
   }
-}
-
-/**
- * Retrieve the query embedding from OpenAI
- * @param input
- * @return {Promise<Array<number>>}
- */
-export async function retrieveMovie(input) {
-  try {
-    const response = await fetch(
-      'https://popchoice-worker.mauriziogalli1971.workers.dev/',
-      {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ input }),
-      }
-    );
-    const { movie } = await response.json();
-    return movie;
-  } catch (error) {}
 }
