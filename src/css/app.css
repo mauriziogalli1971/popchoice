@@ -27,10 +27,11 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: 3rem;
   margin: 0 auto;
   max-width: 400px;
   min-height: 100vh;
-  padding: 3rem 2rem;
+  padding: 3rem;
 }
 
 header, main {
@@ -242,6 +243,7 @@ button:hover {
 }
 .spinner-buttons button {
   background-color: #3B4877;
+  color: #FFF;
   font-weight: 400;
   padding: 0 1rem;
   width: 5rem;

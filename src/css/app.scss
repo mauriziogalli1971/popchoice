@@ -51,10 +51,11 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
+  gap: $spacing-lg;
   margin: 0 auto;
   max-width: $container-width;
   min-height: 100vh;
-  padding: $spacing-lg $spacing;
+  padding: $spacing-lg;
 }
 
 header, main {
@@ -288,7 +289,6 @@ button {
   &-container {
     display: flex;
     gap: $spacing-sm;
-
   }
 
   &-buttons {
@@ -298,6 +298,7 @@ button {
 
     button {
       background-color: $color-3;
+      color: $color-4;
       font-weight: 400;
       padding: 0 $spacing-sm;
       width: 5 * $unit;
