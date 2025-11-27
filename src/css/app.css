@@ -30,7 +30,7 @@ body {
   gap: 3rem;
   margin: 0 auto;
   max-width: 400px;
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 3rem;
 }
 
