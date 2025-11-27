@@ -23,7 +23,17 @@ export default function UserSettings({
 
   useEffect(() => {
     const form = document.querySelector('form');
-    const namedElements = [...form.elements].filter((el) => el.name !== '');
+    if (!form || !form.elements) {
+      fieldNames.current = [];
+      return;
+    }
+
+    // Guard against non-iterable form.elements in some environments
+    const elements = Array.from(form.elements ?? []);
+    const namedElements = elements.filter(
+      (el) => el && typeof el.name === 'string' && el.name.trim() !== ''
+    );
+
     fieldNames.current = [...new Set(namedElements.map((el) => el.name))];
   }, []);
 
