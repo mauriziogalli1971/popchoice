@@ -1,5 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 
+const CF_WORKER_URL = import.meta.env.VITE_CF_WORKER_URL;
+const CF_WORKER_OPTS = {
+  method: 'POST',
+  mode: 'cors',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 export default function UserSettings({
   users,
   setUsers,
@@ -30,30 +39,6 @@ export default function UserSettings({
         getUserMovie(input).then((movie) => {
           setMovies((movies) => [...movies, movie]);
         });
-      }
-
-      /**
-       * Retrieve movie from Cloudflare Worker
-       * @param input
-       * @return {Promise<*>}
-       */
-      async function getUserMovie(input) {
-        const CF_WORKER_URL = import.meta.env.VITE_CF_WORKER_URL;
-        try {
-          const response = await fetch(CF_WORKER_URL, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ input }),
-          });
-          const { movie } = await response.json();
-          return movie;
-        } catch (error) {
-          console.error('Error retrieving movie:', error);
-          throw error;
-        }
       }
     }
   }, [users]);
@@ -118,7 +103,7 @@ export default function UserSettings({
         </div>
       </div>
       <button type="submit" disabled={disabled} aria-disabled={disabled}>
-        {isLastUser()
+        {isLastUser() || disabled
           ? `Get Movie${users.length > 1 ? 's' : ''}`
           : 'Next Person'}
       </button>
@@ -145,5 +130,24 @@ export default function UserSettings({
     const data = Object.fromEntries(formData);
     setUsers((users) => [...users, data]);
     setDisabled(true);
+  }
+
+  /**
+   * Retrieve movie from Cloudflare Worker
+   * @param input
+   * @return {Promise<*>}
+   */
+  async function getUserMovie(input) {
+    try {
+      const response = await fetch(CF_WORKER_URL, {
+        ...CF_WORKER_OPTS,
+        body: JSON.stringify({ input }),
+      });
+      const { movie } = await response.json();
+      return movie;
+    } catch (error) {
+      console.error('Error retrieving movie:', error);
+      throw error;
+    }
   }
 }
