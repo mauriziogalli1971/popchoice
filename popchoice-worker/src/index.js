@@ -7,6 +7,8 @@ const CORS_HEADERS = {
 	'Access-Control-Allow-Methods': 'POST, OPTIONS',
 	'Access-Control-Allow-Headers': 'Content-Type',
 };
+const POSTER_BASE_URL = `https://image.tmdb.org/t/p/w500/`;
+
 export default {
 	async fetch(request, env, ctx) {
 		if (request.method === 'OPTIONS') {
@@ -81,12 +83,17 @@ export default {
  * @return {Promise<Array<number>>}
  */
 async function retrieveQueryEmbedding(openai, input) {
-	const embedding = await openai.embeddings.create({
-		model: 'text-embedding-ada-002',
-		input,
-		encoding_format: 'float',
-	});
-	return embedding.data[0].embedding;
+	try {
+		const embedding = await openai.embeddings.create({
+			model: 'text-embedding-ada-002',
+			input,
+			encoding_format: 'float',
+		});
+		return embedding.data[0].embedding;
+	} catch (error) {
+		console.error('Error retrieving query embedding:', error);
+		throw error;
+	}
 }
 
 /**
@@ -177,8 +184,13 @@ async function retrieveMovie({ input, context, duration, openai }) {
  * @return {Promise<string>}
  */
 async function retrieveMoviePoster(movie, options) {
-	const movieDetails = await retrieveMovieDetails(movie, options);
-	return `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`;
+	try {
+		const movieDetails = await retrieveMovieDetails(movie, options);
+		return `${POSTER_BASE_URL}${movieDetails.poster_path}`;
+	} catch (error) {
+		console.error('Error retrieving movie poster:', error);
+		throw error;
+	}
 }
 
 /**
@@ -202,6 +214,7 @@ async function retrieveMovieDetails(movie, options) {
 
 		return results[0];
 	} catch (error) {
-		console.error('Error retrieving movie poster:', error);
+		console.error('Error retrieving movie details:', error);
+		throw error;
 	}
 }
