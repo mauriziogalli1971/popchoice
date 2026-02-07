@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
-const CF_WORKER_URL = import.meta.env.VITE_CF_WORKER_URL;
+const CF_WORKER_URL =
+  'https://popchoice-worker-production.mauriziogalli1971.workers.dev/';
 const CF_WORKER_OPTS = {
   method: 'POST',
   mode: 'cors',
