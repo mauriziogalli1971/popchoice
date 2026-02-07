@@ -1,0 +1,21 @@
+{
+	"name": "popchoice-worker",
+	"main": "src/index.js",
+	"compatibility_date": "2025-11-21",
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1
+	},
+	"dev": {
+		"port": 8787
+	},
+	"env": {
+		"local": {
+			"vars": {
+				"CLOUDFLARE_INCLUDE_PROCESS_ENV": true
+			}
+		},
+		"production": {
+		}
+	}
+}

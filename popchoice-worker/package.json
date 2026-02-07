@@ -3,15 +3,15 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"deploy": "wrangler deploy",
+		"deploy": "wrangler deploy --env production",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
 		"test": "vitest"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.8.19",
+		"@cloudflare/vitest-pool-workers": "^0.12.10",
 		"vitest": "~3.2.0",
-		"wrangler": "^4.50.0"
+		"wrangler": "^4.63.0"
 	},
 	"dependencies": {
 		"@supabase/supabase-js": "^2.84.0",
