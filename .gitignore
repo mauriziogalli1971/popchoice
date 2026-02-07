@@ -28,3 +28,4 @@ dist-ssr
 .prettierrc
 eslint.config.js
 package-lock.json
+/src/init.js
